@@ -2,10 +2,10 @@ from typing import List, Tuple
 
 def conv_2_tuple(lst):
     return tuple(lst)
-    
+
 def conv_2_list(lst):
     if not hasattr(lst, '__iter__'):
-        return (lst)
+        return (lst, None)
     elif isinstance(lst, List) or isinstance(lst, Tuple):
         def helper(cur_tup, cur_id):
             nonlocal lst
