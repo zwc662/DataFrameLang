@@ -63,7 +63,14 @@ class DFL_VAL(ABC):
     def token(self, *args, **kwargs):
         raise NotImplementedError
 
-    
+    def __eq__(self, other):
+        assert self.token == other.token
+        assert len(self.args) == len(other.args)
+        flg = True
+        for i in range(len(self.args)):
+            flg = flg and (self.args[i] == other.args[i])
+        return flg
+
 class DFL_CTXT:
     def __init__(self, head, tail):
         self.cons = tuple((head, tail))
