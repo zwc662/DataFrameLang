@@ -4,8 +4,18 @@ from dfl_runtime import DFL_Variable
 from dfl_type import DFL_TYPE, DFL_OPTIONAL_TYPE
 from dfl_lib import *
  
+"""This file defines the abstract syntax tree (AST) of DFL.
+The AST is composed of nodes and edges. 
+Each node can be viewed as a valid DFL term, constituted with a data constructor and the content (data).
+The data constructors are identified via reserved tokens which are stored in an enumerated type `DFL_AST_TOKEN`.  
+The content can be another DFL term.
+An edge between two nodes indicates that one node is the content of the other node.
+"""
 
 class DFL_AST_TOKEN(enum.Enum):
+    """DFL AST token class is a enumerated type. Each component is a variant constant token associated with a tag.
+    Each token will be used to define a constructor and the AST node.
+    """
     EMPTY = 0
     INT = 1
     FLOAT = 2
@@ -33,8 +43,12 @@ class DFL_AST_TOKEN(enum.Enum):
         raise NotImplementedError
 
 class DFL_AST_NODE(ABC):
-    def __init__(self, token, *args):
-        self._token = token
+    """DFL_AST_NODE is an abstract class used to define DFL AST node. 
+    Each node object contains a token (constructor) and a argument (content), which combines into a data construction
+    The abstract class must be concretized into different types of AST nodes.
+    """
+    def __init__(self, tag, *args):
+        self._token = DFL_AST_TOKEN.from_tag(tag)
         self._args = conv_2_tuple(args)
 
     @property
@@ -53,7 +67,9 @@ class DFL_AST_NODE(ABC):
     def token(self, *args, **kwargs):
         raise NotImplementedError
     
-
+"""Below is a list of concrete DLF AST nodes. Each node class is a sub-class of the parent abstract DFL AST node class.
+Different kinds of node have different constructors and different number of arguments
+"""
 class DFL_TERM_INT(DFL_AST_NODE):
     def __init__(self, arg: int):
         assert isinstance(arg, int)

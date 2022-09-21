@@ -1,7 +1,6 @@
 import enum
 import abc
 from dfl_type import *
-
  
 
 class DFL_Variable:
@@ -38,8 +37,6 @@ class DFL_Variable:
 
     def __eq__(self, other):
         return self.stamp == other.stamp
-    
-
 
 def test_Variable():
     var1 = DFL_Variable.Declare("hehe")

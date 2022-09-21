@@ -86,8 +86,10 @@ class DFL_TYPEVAR:
         self._val = val
 
     def __eq__(self, other):
+        """ Two type variables are considered being equivalent if the type values of those two variables equal each other.
+        It is only possible if those type values are the same DFL_TYPE objects up to different python variable names.
+        """
         assert self.value == other.value
-    
 
     @classmethod
     def new(cls):
